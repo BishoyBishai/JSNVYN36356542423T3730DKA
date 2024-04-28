@@ -5,6 +5,7 @@ import { useRepositoriesList } from "./hook";
 import { FilterForm } from "../FilterForm";
 import { ListPagination } from "@/components/layout/ListPagination";
 import { NoResult } from "../NoResult";
+import { RepositoryCard } from "../RepositoryCard";
 
 interface IRepositoriesListProps {
   organization: string;
@@ -41,7 +42,7 @@ export const RepositoriesList: FC<IRepositoriesListProps> = ({
         <div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-8">
             {repositories?.items.map((repo) => (
-              <div key={repo.id}>{repo.name}</div>
+              <RepositoryCard key={repo.id} repository={repo} />
             ))}
           </div>
           <ListPagination

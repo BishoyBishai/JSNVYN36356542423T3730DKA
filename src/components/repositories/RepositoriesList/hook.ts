@@ -1,6 +1,6 @@
 import usePagination from "@/hooks/usePagination";
 import { useRepositories } from "@/hooks/useRepositories";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const ITEM_PER_PAGE = 30;
 
@@ -26,12 +26,10 @@ export const useRepositoriesList = (organization: string) => {
     `org:${organization}`
   );
 
-  const handleFilterChange = useCallback(() => {
-    (filterBy: string) => {
-      resetPagination();
-      setReqoritstoryQuery(filterBy);
-    };
-  }, [resetPagination]);
+  const handleFilterChange = (filterBy: string) => {
+    resetPagination();
+    setReqoritstoryQuery(filterBy);
+  };
 
   const hasActiveFilter = useMemo(
     () => reqoritstoryQuery && reqoritstoryQuery !== `org:${organization}`,

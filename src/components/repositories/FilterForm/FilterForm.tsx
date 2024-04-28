@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputForm } from "@/components/layout/form";
 import { Button } from "@/components/ui/Button";
+import { useEffect } from "react";
 
 // Component display filters options
 export const FilterForm = ({
@@ -47,6 +48,10 @@ export const FilterForm = ({
     }
   };
 
+  useEffect(() => {
+    reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [organizationName]);
   return (
     <div className="flex gap-4 items-center justify-between pb-4">
       <form className="w-full" onSubmit={handleSubmit(applyFilters)}>

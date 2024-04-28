@@ -1,7 +1,8 @@
-import { AutoCompleteSelect } from "@/components/layout/AutoCompleteSelect";
+import { AutoCompleteSelect } from "@/components/layout/AutoCompleteSelect/AutoCompleteSelect";
 import { PageLoader } from "@/components/layout/PageLoader";
 import { PageTitle } from "@/components/layout/PageTitle";
 import { EmptyList } from "@/components/organizations/EmptyList";
+import { RepositoriesList } from "@/components/repositories/RepositoriesList";
 import { useOrganizations } from "@/hooks/useOrganizations";
 import { useCallback, useState } from "react";
 
@@ -34,6 +35,9 @@ export const Home = () => {
         }
       />
       {!selectedOrganization && <EmptyList />}
+      {selectedOrganization && (
+        <RepositoriesList organization={selectedOrganization} />
+      )}
     </div>
   );
 };

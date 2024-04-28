@@ -74,3 +74,25 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .max-container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+@layer utilities {
+  .padding-x {
+    @apply sm:px-16 px-8;
+  }
+}

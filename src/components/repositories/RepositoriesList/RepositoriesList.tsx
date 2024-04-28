@@ -3,6 +3,8 @@ import { EmptyList } from "../EmptyList";
 import { PageLoader } from "@/components/layout/PageLoader";
 import { useRepositoriesList } from "./hook";
 import { FilterForm } from "../FilterForm";
+import { ListPagination } from "@/components/layout/ListPagination";
+import { NoResult } from "../NoResult";
 
 interface IRepositoriesListProps {
   organization: string;
@@ -12,8 +14,16 @@ interface IRepositoriesListProps {
 export const RepositoriesList: FC<IRepositoriesListProps> = ({
   organization,
 }) => {
-  const { isLoading, repositories, handleFilterChange } =
-    useRepositoriesList(organization);
+  const {
+    handleFilterChange,
+    isLoading,
+    hasActiveFilter,
+    repositories,
+    isFirst,
+    isLast,
+    paginate,
+    currentPage,
+  } = useRepositoriesList(organization);
 
   return (
     <div className="py-8">
@@ -23,7 +33,9 @@ export const RepositoriesList: FC<IRepositoriesListProps> = ({
       />
       {isLoading && <PageLoader />}
 
-      {repositories?.items.length === 0 ? (
+      {hasActiveFilter && !repositories?.items.length ? (
+        <NoResult />
+      ) : repositories?.items.length === 0 ? (
         <EmptyList organization={organization} />
       ) : (
         <div>
@@ -32,6 +44,12 @@ export const RepositoriesList: FC<IRepositoriesListProps> = ({
               <div key={repo.id}>{repo.name}</div>
             ))}
           </div>
+          <ListPagination
+            isFirst={isFirst}
+            isLast={isLast}
+            onPageChange={paginate}
+            currentPage={currentPage}
+          />
         </div>
       )}
     </div>

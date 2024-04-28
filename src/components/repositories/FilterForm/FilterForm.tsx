@@ -36,11 +36,11 @@ export const FilterForm = ({
       let query = `org:${organizationName}`;
 
       if (data.repo) {
-        query += `+${data.repo} in:name`;
+        query += `+${data.repo.trim()} in:name`;
       }
 
       if (data.minStars) {
-        query += `+stars:${data.minStars}..${data.maxStars}`;
+        query += `+stars:${data.minStars.trim()}..${data.maxStars?.trim()}`;
       }
 
       onFilterApply(query);

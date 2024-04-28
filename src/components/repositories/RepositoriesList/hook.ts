@@ -1,5 +1,5 @@
 import { useRepositories } from "@/hooks/useRepositories";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const ITEM_PER_PAGE = 30;
 
@@ -10,35 +10,25 @@ export const useRepositoriesList = (organization: string) => {
     data: repositories,
   } = useRepositories();
 
-  const [reqoritstoryQuery, setReqoritstoryQuery] = useState(
-    `org:${organization}`
-  );
-
-  const handleFilterChange = useCallback(() => {
-    (filterBy: string) => {
-      setReqoritstoryQuery(filterBy);
-    };
-  }, []);
+  const [repositoryQuery, setRepositoryQuery] = useState(`org:${organization}`);
 
   const hasActiveFilter = useMemo(
-    () => reqoritstoryQuery && reqoritstoryQuery !== `org:${organization}`,
-    [organization, reqoritstoryQuery]
+    () => repositoryQuery !== `org:${organization}`,
+    [organization, repositoryQuery]
   );
 
   useEffect(() => {
-    reqoritstoryQuery &&
-      fetchRepositoriesList(`${reqoritstoryQuery}&per_page=${ITEM_PER_PAGE}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reqoritstoryQuery, organization]);
+    fetchRepositoriesList(`${repositoryQuery}&per_page=${ITEM_PER_PAGE}`);
+  }, [repositoryQuery, fetchRepositoriesList]);
 
   useEffect(() => {
-    setReqoritstoryQuery(`org:${organization}`);
+    setRepositoryQuery(`org:${organization}`);
   }, [organization]);
 
   return {
     repositories,
     hasActiveFilter,
-    handleFilterChange,
+    handleFilterChange: setRepositoryQuery,
     isLoading,
   };
 };

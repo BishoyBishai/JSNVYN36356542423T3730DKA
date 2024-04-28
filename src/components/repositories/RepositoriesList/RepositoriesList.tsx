@@ -2,6 +2,7 @@ import { FC } from "react";
 import { EmptyList } from "../EmptyList";
 import { PageLoader } from "@/components/layout/PageLoader";
 import { useRepositoriesList } from "./hook";
+import { FilterForm } from "../FilterForm";
 
 interface IRepositoriesListProps {
   organization: string;
@@ -11,10 +12,15 @@ interface IRepositoriesListProps {
 export const RepositoriesList: FC<IRepositoriesListProps> = ({
   organization,
 }) => {
-  const { isLoading, repositories } = useRepositoriesList(organization);
+  const { isLoading, repositories, handleFilterChange } =
+    useRepositoriesList(organization);
 
   return (
     <div className="py-8">
+      <FilterForm
+        onFilterApply={handleFilterChange}
+        organizationName={organization}
+      />
       {isLoading && <PageLoader />}
 
       {repositories?.items.length === 0 ? (

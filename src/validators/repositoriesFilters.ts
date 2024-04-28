@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const isPositiveIntOptional = (value: string | undefined): boolean => {
-  return value === undefined || (Number.isInteger(+value) && +value > 0);
+  return !value || (Number.isInteger(+value) && +value > 0);
 };
 
 /**
